@@ -3,7 +3,7 @@ package core;
 import javax.xml.bind.annotation.XmlElement;
 
 public class Administrator extends User {
-    private int admin_id;
+    private int admin_id;//TODO: CODE CONVENTION adminId
 
     public Administrator() {
 

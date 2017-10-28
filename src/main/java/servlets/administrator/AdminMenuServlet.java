@@ -19,24 +19,31 @@ public class AdminMenuServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        String login = (String) req.getSession().getAttribute("user");
+        String login;
+        Object user = req.getSession().getAttribute("user");
+        if (user != null) {
+            login = (String) user;
+        } else {
+            throw new RuntimeException("BAD LOGIN");
+        }
+
         Administrator administrator = new AdminService().processingAdminMenu(login);
         req.getSession().setAttribute("userMenu", administrator);
 
-        String button;
-        button = req.getParameter("town");
-        if(button!=null) {
-            updateAdministrator(administrator, button);
+
+        String pressedButtonName = req.getParameter("town");
+        if (pressedButtonName != null) {
+            updateAdministrator(administrator, pressedButtonName);
         }
-        button = req.getParameter("number");
-        if(button!=null) {
-            updateAdministrator(administrator, button);
+        pressedButtonName = req.getParameter("number");
+        if (pressedButtonName != null) {
+            updateAdministrator(administrator, pressedButtonName);
         }
-        button = req.getParameter("email");
-        if(button!=null) {
-            updateAdministrator(administrator, button);
+        pressedButtonName = req.getParameter("email");
+        if (pressedButtonName != null) {
+            updateAdministrator(administrator, pressedButtonName);
         }
-        ((HttpServletResponse)resp).sendRedirect("/webtravel/admin/menu");
+        ((HttpServletResponse) resp).sendRedirect("/webtravel/admin/menu");
     }
 
     private void updateAdministrator(Administrator administrator, String button) {

@@ -37,7 +37,7 @@ public class CustomerListService {
 
     public void delete(int id) {
         CustomerDAO customerDAO = new CustomerDAO();
-        if(id==1) {
+        if (id == 1) {
             
         } else {
             try {

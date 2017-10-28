@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Travel {
-    private int travel_id;
+    private int travel_id;//
     private String country;
     private String town;
     private String levelHotel;

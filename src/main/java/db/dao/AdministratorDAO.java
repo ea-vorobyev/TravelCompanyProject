@@ -10,13 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdministratorDAO implements IAbstractDAO<Administrator> {
-    private IConnectionManager manager;
-    private final Logger logger;
 
-    public AdministratorDAO() {
-        manager = TomcatConnectionPool.getInstance();
-        logger = Logger.getLogger(AdministratorDAO.class);
-    }
+    private static IConnectionManager manager = TomcatConnectionPool.getInstance();
+    private static final Logger logger = Logger.getLogger(AdministratorDAO.class);
+
+    private final static String SQL_GET_ALL = "SELECT * FROM administrators";
+
 
     public class AdministratorDAOException extends Exception {
 
@@ -25,15 +24,15 @@ public class AdministratorDAO implements IAbstractDAO<Administrator> {
     @Override
     public List<Administrator> getAll() throws AdministratorDAOException {
         List<Administrator> administratorList = new ArrayList<>();
-        try (Connection connection = manager.getConnection()){
+        try (Connection connection = manager.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM administrators");
+            ResultSet resultSet = statement.executeQuery(SQL_GET_ALL);
             while (resultSet.next()) {
                 Administrator administrator = getAdministrator(resultSet);
                 administratorList.add(administrator);
             }
         } catch (SQLException e) {
-            logger.error("This is Error : " + e.getMessage());
+            logger.error("This is Error : " + e.getMessage(), e);
             throw new AdministratorDAOException();
         }
         return administratorList;
@@ -81,7 +80,7 @@ public class AdministratorDAO implements IAbstractDAO<Administrator> {
     public void updateAll(List<Administrator> administratorList) throws AdministratorDAOException {
         try (Connection connection = manager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE administrators SET first_name = ?, nick_name = ?, family_name = ?, password = ?, town = ?, birth_day = ?, email = ? WHERE admin_id = ? ");
-            for (Administrator administrator: administratorList) {
+            for (Administrator administrator : administratorList) {
                 setAdministratorUpdate(statement, administrator);
                 statement.addBatch();
             }
@@ -104,7 +103,7 @@ public class AdministratorDAO implements IAbstractDAO<Administrator> {
         }
     }
 
-    public void updateB(Administrator administrator) throws AdministratorDAOException {
+    public void updateB(Administrator administrator) throws AdministratorDAOException {//название
         try (Connection connection = manager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE administrators SET first_name = ?, nick_name = ?, family_name = ?, password = ?, town = ?, email = ? WHERE admin_id = ? ");
             statement.setString(1, administrator.getFirstName());

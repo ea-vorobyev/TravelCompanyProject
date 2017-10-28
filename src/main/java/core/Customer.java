@@ -3,7 +3,7 @@ package core;
 import javax.xml.bind.annotation.XmlElement;
 
 public class Customer extends User {
-    private int customer_id;
+    private int customer_id;//
     private String contactNumber;
 
     public Customer() {

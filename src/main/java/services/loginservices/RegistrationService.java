@@ -1,4 +1,4 @@
-package services.login_services;
+package services.loginservices;
 
 import core.Administrator;
 import core.Customer;

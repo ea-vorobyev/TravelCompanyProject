@@ -1,6 +1,6 @@
 package servlets.login_servlets;
 
-import services.login_services.RegistrationService;
+import services.loginservices.RegistrationService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +24,7 @@ public class CheckInServlet extends HttpServlet {
         String familyName = req.getParameter("familyName");
         String password = req.getParameter("password");
 
-        req.getSession().setAttribute("passwordError", "Password");
+        req.getSession().setAttribute("passwordError", "Password");//password placeholder
         if(password != null && password.length()<6) {
             req.getSession().setAttribute("passwordError", "Не менее 6 символов");
             ((HttpServletResponse)resp).sendRedirect("/webtravel/checkIn");

@@ -16,7 +16,7 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String button = req.getParameter("exitAdmin");
-        if(button!=null) {
+        if (button != null) {
             req.getSession().setAttribute("isAuth", null);
             ((HttpServletResponse) resp).sendRedirect("/webtravel");
         } else {

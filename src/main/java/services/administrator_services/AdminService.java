@@ -13,21 +13,20 @@ public class AdminService {
         logger = Logger.getLogger(AdminService.class);
     }
 
-    public Administrator processingAdminMenu(String login) {
+    public Administrator processingAdminMenu(String login) {//TODO: stranno
         AdministratorDAO administratorDAO = new AdministratorDAO();
-        List<Administrator> administratorList = null;
         try {
-            administratorList = administratorDAO.getAll();
+            List<Administrator> administratorList = administratorDAO.getAll();
+            for (Administrator administrator : administratorList) {
+                if (login.equals(administrator.getNickName())) {
+                    return administrator;
+                }
+            }
         } catch (AdministratorDAO.AdministratorDAOException e) {
             logger.error("This is Error : " + e.getMessage());
         }
-        assert administratorList != null;
-        for(Administrator administrator: administratorList) {
-            if(login.equals(administrator.getNickName())) {
-                return administrator;
-            }
-        }
-        return null;
+
+        throw new RuntimeException("Can not found admin with login " + login);
     }
 
     public void updateAdministrator(Administrator administrator) {

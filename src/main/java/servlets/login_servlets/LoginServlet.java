@@ -1,6 +1,6 @@
 package servlets.login_servlets;
 
-import services.login_services.AuthorizationService;
+import services.loginservices.AuthorizationService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +20,11 @@ public class LoginServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String login = req.getParameter("nickName");
         String password = req.getParameter("password");
-        String user = new AuthorizationService().auth(login, password);
-
-        if ("administrator".equals(user)) {
-            req.getSession().setAttribute("isAuth", "administrator");
+        String userId = new AuthorizationService().auth(login, password);
+        String role = AuthService.getRoleById(userId);
+        if ("administrator".equals(role)) {
+            req.getSession().setAttribute("isAuth", true);
+            req.getSession().setAttribute("role", "administrator");
             req.getSession().setAttribute("user", login);
             ((HttpServletResponse) resp).sendRedirect("/webtravel/admin");
         } else if ("customer".equals(user)) {

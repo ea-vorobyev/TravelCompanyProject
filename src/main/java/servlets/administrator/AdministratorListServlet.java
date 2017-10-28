@@ -19,7 +19,7 @@ public class AdministratorListServlet extends HelloServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ((HttpServletResponse)resp).sendRedirect("/webtravel/admin/administrators");
+        resp.sendRedirect("/webtravel/admin/administrators");
     }
 
 }
